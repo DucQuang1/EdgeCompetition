@@ -79,3 +79,13 @@ HeadlineWordsLog = glm (Popular~. , data = NewsTrainHeadline, family= binomial)
 PredTest = predict(HeadlineWordsLog, newdata=NewsTestHeadline, type="response")
 MySubmissionLog = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = PredTest)
 write.csv(MySubmissionLog, "SubmissionHeadlineLog.csv", row.names=FALSE)
+
+library(party)
+HeadlineWordsCtree = ctree(Popular~., data = NewsTrainHeadline)
+PredTest = predict(HeadlineWordsCtree, newdata = NewsTestHeadline)
+MySubmissionCtree = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = PredTest)
+colnames(MySubmissionCtree) = c("UniqueID","Probability1")
+write.csv(MySubmissionCtree, "SubmissionHeadlineCtree.csv", row.names=FALSE)
+
+write.csv (NewsTestHeadline, "AddedNewsTest.csv", row.names = FALSE)
+write.csv(NewsTrainHeadline, "AddedNewsTrain.csv", row.names = FALSE)
